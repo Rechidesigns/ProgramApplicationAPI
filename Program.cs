@@ -1,4 +1,6 @@
 using Microsoft.Azure.Cosmos;
+using ProgramAplicationAPI.Repository.Interface;
+using ProgramAplicationAPI.Repository.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,16 @@ builder.Services.AddSingleton((provider) =>
     return cosmosClient;
 });
 
+
+builder.Services.AddSingleton<IQuestionService, QuestionService>(provider =>
+{
+    var cosmosClient = provider.GetRequiredService<CosmosClient>();
+    var configuration = provider.GetRequiredService<IConfiguration>();
+    var databaseName = configuration["CosmosDbSettings:DatabaseName"];
+    var containerName = configuration["CosmosDbSettings:ContainerName"];
+    var logger = provider.GetRequiredService<ILogger<QuestionService>>();
+    return new QuestionService(cosmosClient, databaseName, containerName );
+});
 
 
 builder.Services.AddControllers();

@@ -32,11 +32,13 @@ namespace ProgramAplicationAPI.Repository.Services
             await _container.DeleteItemAsync<QuestionModel>(id, new PartitionKey(id));
         }
 
-        public async Task<QuestionDto> GetQuestionAsync(string id)
+        public async Task<QuestionDto> GetQuestionAsync(string id, string questionId)
         {
             try
             {
-                var question = await _container.ReadItemAsync<QuestionModel>(id, new PartitionKey(id));
+                var question = await _container.ReadItemAsync<QuestionModel>(id, new PartitionKey(questionId));
+                //var question = await _container.ReadItemAsync<QuestionModel>(id, new PartitionKey(question.QuestionId));
+
                 return MapQuestionModelToDto(question);
             }
             catch (CosmosException ex)

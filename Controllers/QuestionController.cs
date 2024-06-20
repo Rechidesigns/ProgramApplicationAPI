@@ -23,9 +23,9 @@ namespace ProgramAplicationAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<QuestionDto>> GetQuestion(string id)
+        public async Task<ActionResult<QuestionDto>> GetQuestion(string id, string questionId)
         {
-            return await _questionService.GetQuestionAsync(id);
+            return await _questionService.GetQuestionAsync(id, questionId);
         }
 
         [HttpPost]

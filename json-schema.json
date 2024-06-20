@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "title": "JSON Schema for my JSON file format",
+
+  "type": "object",
+
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "This shows up in tooltips for the 'name' property."
+    },
+    "versions": {
+      "type": "array",
+      "description": "An array of version numbers.",
+      "minItems": 1,
+      "items": {
+        "type": "number"
+      }
+    }
+  }
+}
+
+
+//payload for creating questions
+
+{
+  "questionText": "What is your best three color?",
+  "questionType": 1,
+  "isRequired": true,
+  "isInternal": false,
+  "dataType": 2,
+  "choices": [
+    {
+      "choiceText": "red"
+    },
+    {
+      "choiceText": "blue"
+    },
+    {
+      "choiceText": "green"
+    },
+    {
+      "choiceText": "black"
+    },
+    {
+      "choiceText": "yellow"
+    }
+  ]
+}
+
+
+
+//storing them here after using them for brainstorming
+
+{
+  "id": "63ce63976ec9e900034b25cf",
+  "created_at": "2024-06-19 13:24:19.320847 +00:00",
+  "personal": [
+    {
+      "question": "string",
+      "#e.g" "first",
+      "name": null,
+      "is_required": "boolean",
+      "is_internal": "boolean",
+      "data_type": "string"
+    },
+    {
+      "question": "string",
+      "is_required": "boolean",
+      "is_internal": "boolean",
+      "data_type": "string"
+    }
+  ],
+  "custom_questions": [
+    {
+      "question": "string",
+      "is_required": "boolean",
+      "is_internal": "boolean",
+      "data_type": "string",
+      "#int",
+      "string",
+      "bool",
+      "date",
+      "dropdown": null,
+      "choice": [
+        "strings1",
+        "string2"
+      ]
+    }
+  ]
+}
+
+{
+        "question": "First Name", #e.g first name
+        "is_required": true,
+        "is_internal": false,
+        "data_type": "string"
+      },
+      {
+        "question": "Phone", #e.g
+        "is_required": false,
+        "is_internal": true,
+        "data_type": "number"
+      },
+      {
+        "question": "Multiple choice: Please select at least 2 answers from the dropdowns below.",
+        "is_required": true,
+        "is_internal": false,
+        "data_type": "dropdown"
+        "choice":[ 
+          "creative", "outgoing", "college need att"
+        ],
+      },

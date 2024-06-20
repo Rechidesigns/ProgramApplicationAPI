@@ -4,6 +4,7 @@ using ProgramAplicationAPI.Core.Dtos;
 using ProgramAplicationAPI.Core.Model;
 using ProgramAplicationAPI.Repository;
 using ProgramAplicationAPI.Repository.Interface;
+using SendGrid.Helpers.Errors.Model;
 
 namespace ProgramAplicationAPI.Repository.Services
 {
@@ -37,7 +38,6 @@ namespace ProgramAplicationAPI.Repository.Services
             try
             {
                 var question = await _container.ReadItemAsync<QuestionModel>(id, new PartitionKey(questionId));
-                //var question = await _container.ReadItemAsync<QuestionModel>(id, new PartitionKey(question.QuestionId));
 
                 return MapQuestionModelToDto(question);
             }
@@ -58,11 +58,22 @@ namespace ProgramAplicationAPI.Repository.Services
             }
             return questions.Select(MapQuestionModelToDto).ToList();
         }
-        public async Task<QuestionDto> UpdateQuestionAsync(QuestionDto questionDto)
+        public async Task<QuestionDto> UpdateQuestionAsync(string id, string questionId, QuestionDto questionDto)
         {
-            var questionModel = MapQuestionDtoToModel(questionDto);
-            await _container.UpsertItemAsync(questionModel);
-            return questionDto;
+            var questionResponse = await _container.ReadItemAsync<QuestionModel>(id, new PartitionKey(questionId));
+            var questionModel = questionResponse.Resource;
+
+            if (questionModel != null)
+            {
+                var questionModelUpdated = MapQuestionDtoToModel(questionDto);
+                questionModelUpdated.id = questionModel.id;
+                questionModelUpdated.questionId = questionModel.questionId;
+
+                await _container.UpsertItemAsync(questionModelUpdated);
+
+                return MapQuestionModelToDto(questionModelUpdated);
+            }
+            throw new NotFoundException("Question not found");
         }
 
         private QuestionDto MapQuestionModelToDto(QuestionModel questionModel)

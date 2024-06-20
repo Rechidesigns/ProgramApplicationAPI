@@ -35,9 +35,9 @@ namespace ProgramAplicationAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<QuestionDto>> UpdateQuestion(QuestionDto questionDto)
+        public async Task<ActionResult<QuestionDto>> UpdateQuestion(string id, string questionId, QuestionDto questionDto)
         {
-            return await _questionService.UpdateQuestionAsync(questionDto);
+            return await _questionService.UpdateQuestionAsync(id, questionId, questionDto);
         }
 
         [HttpDelete("{id}")]

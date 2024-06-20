@@ -31,30 +31,6 @@ namespace ProgramAplicationAPI.Repository.Services
             _container = cosmosClient.GetContainer(databaseName, containerName);
         }
 
-        //public async Task<QuestionDto> CreateQuestionAsync(QuestionDto questionDto)
-        //{
-        //    var questionModel = MapQuestionDtoToModel(questionDto);
-        //    await _container.CreateItemAsync(questionModel);
-        //    return questionDto;
-        //}
-
-        //public async Task<QuestionDto> CreateQuestionAsync(QuestionDto questionDto)
-        //{
-        //    var questionModel = MapQuestionDtoToModel(questionDto);
-
-        //    var validationResult = await new QuestionModelValidator().ValidateAsync(questionModel);
-
-        //    if (!validationResult.IsValid)
-        //    {
-        //        // Handle validation errors, e.g., throw an exception or return an error response
-        //        throw new ValidationException(validationResult.Errors);
-        //    }
-
-        //    await _container.CreateItemAsync(questionModel);
-        //    return questionDto;
-        //}
-
-
         public async Task<List<QuestionDto>> CreateQuestionsAsync(List<QuestionDto> questionsDto)
         {
             var questionsModel = new List<QuestionModel>();
@@ -69,7 +45,6 @@ namespace ProgramAplicationAPI.Repository.Services
 
             if (!validationResult.IsValid)
             {
-                // Handle validation errors, e.g., throw an exception or return an error response
                 throw new ValidationException(validationResult.Errors);
             }
 
@@ -140,7 +115,6 @@ namespace ProgramAplicationAPI.Repository.Services
                 QuestionType = questionModel.QuestionType.ToString(),
                 IsRequired = questionModel.IsRequired,
                 IsInternal = questionModel.IsInternal,
-                //DataType = questionModel.DataType,
                 Choices = questionModel.Choices.Select(c => new ChoiceDto { ChoiceText = c.ChoiceText }).ToList()
             };
         }
@@ -154,7 +128,6 @@ namespace ProgramAplicationAPI.Repository.Services
                 QuestionType = (QuestionType)Enum.Parse(typeof(QuestionType), questionDto.QuestionType),
                 IsRequired = questionDto.IsRequired,
                 IsInternal = questionDto.IsInternal,
-               // DataType = questionDto.DataType,
                 Choices = questionDto.Choices.Select(c => new ChoiceModel { ChoiceText = c.ChoiceText }).ToList()
             };
         }

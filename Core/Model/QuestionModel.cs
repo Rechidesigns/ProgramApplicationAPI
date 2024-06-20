@@ -48,20 +48,6 @@ namespace ProgramAplicationAPI.Core.Model
         public string ChoiceText { get; set; }
     }
 
-    //public class QuestionModelValidator : AbstractValidator<QuestionModel>
-    //{
-    //    public QuestionModelValidator()
-    //    {
-    //        RuleFor(q => q.QuestionText).NotEmpty();
-    //        RuleFor(q => q.QuestionType).IsInEnum();
-
-    //        When(q => q.QuestionType == QuestionType.MultipleChoice || q.QuestionType == QuestionType.Dropdown, () =>
-    //        {
-    //            RuleFor(q => q.Choices).Must(choices => choices != null && choices.Count >= 2);
-    //        });
-    //    }
-    //}
-
     public class QuestionModelValidator : AbstractValidator<List<QuestionModel>>
     {
         public QuestionModelValidator()

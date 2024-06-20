@@ -8,7 +8,7 @@ namespace ProgramAplicationAPI.Repository.Interface
         Task<List<QuestionDto>> GetQuestionsAsync();
         Task<QuestionDto> CreateQuestionAsync(QuestionDto question);
         Task<QuestionDto> UpdateQuestionAsync(QuestionDto question);
-        Task DeleteQuestionAsync(string id);
+        Task DeleteQuestionAsync(string id, string questionId);
 
     }
 }

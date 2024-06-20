@@ -27,9 +27,9 @@ namespace ProgramAplicationAPI.Repository.Services
             return questionDto;
         }
 
-        public async Task DeleteQuestionAsync(string id)
+        public async Task DeleteQuestionAsync(string id, string questionId)
         {
-            await _container.DeleteItemAsync<QuestionModel>(id, new PartitionKey(id));
+            await _container.DeleteItemAsync<QuestionModel>(id, new PartitionKey(questionId));
         }
 
         public async Task<QuestionDto> GetQuestionAsync(string id, string questionId)

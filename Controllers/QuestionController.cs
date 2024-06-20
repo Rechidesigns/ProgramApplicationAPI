@@ -41,9 +41,9 @@ namespace ProgramAplicationAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteQuestion(string id)
+        public async Task<IActionResult> DeleteQuestion(string id, string questionId)
         {
-            await _questionService.DeleteQuestionAsync(id);
+            await _questionService.DeleteQuestionAsync(id, questionId);
             return NoContent();
         }
     }

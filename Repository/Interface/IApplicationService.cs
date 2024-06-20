@@ -5,9 +5,10 @@ namespace ProgramAplicationAPI.Repository.Interface
 {
     public interface IApplicationService
     {
-        Task<QuestionModel> GetQuestionAsync(string questionId);
-        Task<List<QuestionModel>> GetQuestionsAsync();
-        Task SubmitApplicationAsync(string questionId, ApplicationModel application);
-        Task SubmitApplicationAsync(string questionId, ApplicationDto application);
+
+        Task SubmitApplicationAnswer(string QuestionId, ApplicationModelDto application);
+        Task<ApplicationModelDto> GetApplicationAnswerById(string id);
+        Task UpdateApplicationAnswer(string id, ApplicationModelDto application);
+        Task DeleteApplicationAnswer(string id);
     }
 }

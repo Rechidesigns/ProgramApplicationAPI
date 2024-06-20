@@ -5,6 +5,13 @@ using ProgramAplicationAPI.Core.Model;
 using ProgramAplicationAPI.Repository;
 using ProgramAplicationAPI.Repository.Interface;
 using SendGrid.Helpers.Errors.Model;
+using Microsoft.Azure.Cosmos.Linq;
+using Microsoft.Office.Interop.Excel;
+using Microsoft.Extensions.Logging;
+using Cassandra;
+using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace ProgramAplicationAPI.Repository.Services
 {
@@ -12,18 +19,37 @@ namespace ProgramAplicationAPI.Repository.Services
     {
         private readonly Container _container;
         private readonly CosmosClient _cosmosClient;
+        private readonly ILogger<QuestionService> _logger;
+
         //private readonly Microsoft.Azure.Cosmos.Container _container;
 
 
-        public QuestionService(CosmosClient cosmosClient, string databaseName, string containerName )
+        public QuestionService(CosmosClient cosmosClient, string databaseName, string containerName, ILogger<QuestionService> logger )
         {
             _cosmosClient = cosmosClient;
+            _logger = logger;
             _container = cosmosClient.GetContainer(databaseName, containerName);
         }
+
+        //public async Task<QuestionDto> CreateQuestionAsync(QuestionDto questionDto)
+        //{
+        //    var questionModel = MapQuestionDtoToModel(questionDto);
+        //    await _container.CreateItemAsync(questionModel);
+        //    return questionDto;
+        //}
 
         public async Task<QuestionDto> CreateQuestionAsync(QuestionDto questionDto)
         {
             var questionModel = MapQuestionDtoToModel(questionDto);
+
+            var validationResult = await new QuestionModelValidator().ValidateAsync(questionModel);
+
+            if (!validationResult.IsValid)
+            {
+                // Handle validation errors, e.g., throw an exception or return an error response
+                throw new ValidationException(validationResult.Errors);
+            }
+
             await _container.CreateItemAsync(questionModel);
             return questionDto;
         }
@@ -84,7 +110,7 @@ namespace ProgramAplicationAPI.Repository.Services
                 QuestionType = questionModel.QuestionType,
                 IsRequired = questionModel.IsRequired,
                 IsInternal = questionModel.IsInternal,
-                DataType = questionModel.DataType,
+                //DataType = questionModel.DataType,
                 Choices = questionModel.Choices.Select(c => new ChoiceDto { ChoiceText = c.ChoiceText }).ToList()
             };
         }
@@ -98,7 +124,7 @@ namespace ProgramAplicationAPI.Repository.Services
                 QuestionType = questionDto.QuestionType,
                 IsRequired = questionDto.IsRequired,
                 IsInternal = questionDto.IsInternal,
-                DataType = questionDto.DataType,
+               // DataType = questionDto.DataType,
                 Choices = questionDto.Choices.Select(c => new ChoiceModel { ChoiceText = c.ChoiceText }).ToList()
             };
         }

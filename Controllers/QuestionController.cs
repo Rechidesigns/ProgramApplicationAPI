@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProgramAplicationAPI.Core.Dtos;
+using ProgramAplicationAPI.Core.Model;
 using ProgramAplicationAPI.Repository.Interface;
 
 namespace ProgramAplicationAPI.Controllers
@@ -28,11 +30,30 @@ namespace ProgramAplicationAPI.Controllers
             return await _questionService.GetQuestionAsync(id, questionId);
         }
 
+        //[HttpPost]
+        //public async Task<ActionResult<QuestionDto>> CreateQuestion(List<QuestionDto> questionDtos)
+        //{
+        //    return await _questionService.CreateQuestionsAsync(questionDtos);
+        //}
+
         [HttpPost]
-        public async Task<ActionResult<QuestionDto>> CreateQuestion(QuestionDto questionDto)
+        public async Task<IActionResult> CreateQuestion(QuestionDto questionDto)
         {
-            return await _questionService.CreateQuestionAsync(questionDto);
+            try
+            {
+                var result = await _questionService.CreateQuestionAsync(questionDto);
+                return Ok(result);
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(ex.Errors);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
+
 
         [HttpPut]
         public async Task<ActionResult<QuestionDto>> UpdateQuestion(string id, string questionId, QuestionDto questionDto)

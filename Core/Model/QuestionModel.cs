@@ -2,6 +2,8 @@
 using Cassandra.Data.Linq;
 using Microsoft.Azure.Documents;
 using Newtonsoft.Json;
+using FluentValidation;
+
 
 
 namespace ProgramAplicationAPI.Core.Model
@@ -23,9 +25,6 @@ namespace ProgramAplicationAPI.Core.Model
         [JsonProperty("isInternal")]
         public bool IsInternal { get; set; }
 
-        [JsonProperty("dataType")]
-        public DataType DataType { get; set; }
-
         [JsonProperty("choices")]
         public List<ChoiceModel> Choices { get; set; }
 
@@ -43,17 +42,23 @@ namespace ProgramAplicationAPI.Core.Model
         Number
     }
 
-    public enum DataType
-    {
-        String,
-        Boolean,
-        Number,
-        Date
-    }
-
     public class ChoiceModel
     {
         [JsonProperty("choiceText")]
         public string ChoiceText { get; set; }
+    }
+
+    public class QuestionModelValidator : AbstractValidator<QuestionModel>
+    {
+        public QuestionModelValidator()
+        {
+            RuleFor(q => q.QuestionText).NotEmpty();
+            RuleFor(q => q.QuestionType).IsInEnum();
+
+            When(q => q.QuestionType == QuestionType.MultipleChoice || q.QuestionType == QuestionType.Dropdown, () =>
+            {
+                RuleFor(q => q.Choices).Must(choices => choices != null && choices.Count >= 2);
+            });
+        }
     }
 }

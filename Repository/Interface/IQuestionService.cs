@@ -1,4 +1,6 @@
-﻿using ProgramAplicationAPI.Core.Dtos;
+﻿using Microsoft.AspNetCore.Mvc;
+using ProgramAplicationAPI.Core.Dtos;
+using ProgramAplicationAPI.Core.Model;
 
 namespace ProgramAplicationAPI.Repository.Interface
 {

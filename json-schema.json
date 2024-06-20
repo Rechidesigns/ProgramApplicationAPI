@@ -88,26 +88,39 @@
       ]
     }
   ]
-}
+} {
+  "question": "First Name",
+  #e.g first
+  name
+  "is_required": true,
+  "is_internal": false,
+  "data_type": "string"
+}, {
+  "question": "Phone",
+  #e.g
+  "is_required": false,
+  "is_internal": true,
+  "data_type": "number"
+}, {
+  "question": "Multiple choice: Please select at least 2 answers from the dropdowns below.",
+  "is_required": true,
+  "is_internal": false,
+  "data_type": "dropdown"
+  "choice": [
+    "creative",
+    "outgoing",
+    "college need att"
+  ],
+},
+
+
+
+//round 2 testing
 
 {
-        "question": "First Name", #e.g first name
-        "is_required": true,
-        "is_internal": false,
-        "data_type": "string"
-      },
-      {
-        "question": "Phone", #e.g
-        "is_required": false,
-        "is_internal": true,
-        "data_type": "number"
-      },
-      {
-        "question": "Multiple choice: Please select at least 2 answers from the dropdowns below.",
-        "is_required": true,
-        "is_internal": false,
-        "data_type": "dropdown"
-        "choice":[ 
-          "creative", "outgoing", "college need att"
-        ],
-      },
+  "questionText": "Describe your favorite hobby",
+  "questionType": 0,
+  "isRequired": true,
+  "isInternal": true,
+  "choices": []
+}

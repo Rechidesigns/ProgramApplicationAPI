@@ -8,8 +8,8 @@ namespace ProgramAplicationAPI.Core.Model
 {
     public class QuestionModel
     {
-        [JsonProperty("id")]
-        public string id { get; set; }
+        [JsonProperty("id")] 
+        public string id { get; set; } = Guid.NewGuid().ToString();
 
         [JsonProperty("questionText")]
         public string QuestionText { get; set; }
@@ -30,7 +30,7 @@ namespace ProgramAplicationAPI.Core.Model
         public List<ChoiceModel> Choices { get; set; }
 
         [PartitionKey]
-        public string questionId { get; set; }
+        public string questionId { get; set; } = Guid.NewGuid().ToString();
     }
 
     public enum QuestionType

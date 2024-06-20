@@ -24,7 +24,7 @@ builder.Services.AddSingleton<IQuestionService, QuestionService>(provider =>
     var databaseName = configuration["CosmosDbSettings:DatabaseName"];
     var containerName = configuration["CosmosDbSettings:ContainerName"];
     var logger = provider.GetRequiredService<ILogger<QuestionService>>();
-    return new QuestionService(cosmosClient, databaseName, containerName );
+    return new QuestionService(cosmosClient, databaseName, containerName, logger );
 });
 
 

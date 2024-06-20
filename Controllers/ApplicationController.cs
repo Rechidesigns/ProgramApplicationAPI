@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using ProgramAplicationAPI.Core.Dtos;
 using ProgramAplicationAPI.Repository.Interface;
+using ProgramAplicationAPI.Repository.Services;
+using SendGrid.Helpers.Errors.Model;
 
 namespace ProgramAplicationAPI.Controllers
 {
@@ -9,25 +11,30 @@ namespace ProgramAplicationAPI.Controllers
     [ApiController]
     public class ApplicationController : ControllerBase
     {
-        private readonly IApplicationService _service;
+        private readonly IApplicationService _applicationService;
 
-        public ApplicationController(IApplicationService service)
+        public ApplicationController(IApplicationService applicationService)
         {
-            _service = service;
+            _applicationService = applicationService;
         }
 
-        [HttpGet("{questionId}")]
-        public async Task<IActionResult> GetQuestionAsync(string questionId)
+        [HttpPost]
+        [Route("submit-answer")]
+        public async Task<IActionResult> SubmitAnswer([FromBody] ApplicationModelDto application)
         {
-            var question = await _service.GetQuestionAsync(questionId);
-            return Ok(question);
-        }
-
-        [HttpPost("{questionId}")]
-        public async Task<IActionResult> SubmitApplicationAsync(string questionId, ApplicationDto application)
-        {
-            await _service.SubmitApplicationAsync(questionId, application);
-            return Ok("Application submitted successfully");
+            try
+            {
+                await _applicationService.SubmitApplicationAnswer(application.QuestionId, application);
+                return Ok("Answer submitted successfully");
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
     }
 }

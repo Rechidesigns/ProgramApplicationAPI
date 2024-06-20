@@ -2,18 +2,14 @@
 
 namespace ProgramAplicationAPI.Core.Dtos
 {
-    public class ApplicationDto
+    public class ApplicationModelDto
     {
-        public string answerId { get; set; }
-
-        public List<AnswerDto> Answers { get; set; }
-    }
-
-
-    public class AnswerDto
-    {
-
         public string QuestionId { get; set; }
-        public object Answer { get; set; }
+        public string Answer { get; set; }
+
+    }
+    public class AnswerModelDto
+    {
+        public List<ApplicationModelDto> Answers { get; set; }
     }
 }

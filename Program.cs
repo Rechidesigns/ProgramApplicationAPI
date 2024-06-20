@@ -27,6 +27,16 @@ builder.Services.AddSingleton<IQuestionService, QuestionService>(provider =>
     return new QuestionService(cosmosClient, databaseName, containerName, logger );
 });
 
+builder.Services.AddSingleton<IApplicationService, ApplicationService>(provider =>
+{
+    var cosmosClient = provider.GetRequiredService<CosmosClient>();
+    var configuration = provider.GetRequiredService<IConfiguration>();
+    var databaseName = configuration["CosmosDbSettings:DatabaseName"];
+    var containerName = configuration["CosmosDbSettings:ContainerName"];
+    var logger = provider.GetRequiredService<ILogger<ApplicationService>>();
+    return new ApplicationService(cosmosClient, databaseName, containerName, logger);
+});
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

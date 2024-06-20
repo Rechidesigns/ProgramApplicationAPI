@@ -11,24 +11,20 @@ namespace ProgramAplicationAPI.Core.Model
         [JsonProperty("id")]
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
+        [JsonProperty("questionid")]
+        public string QuestionId { get; set; }
+
         [JsonProperty("answers")]
-        public List<AnswerModel> Answers { get; set; }
+        public string Answer { get; set; }
 
         [PartitionKey]
-        public string answerId { get; set; } = Guid.NewGuid().ToString();
-
-        
+        public string questionId { get; set; } = Guid.NewGuid().ToString();
     }
-
-
 
     public class AnswerModel
     {
-        [JsonProperty("questionId")]
-        public string QuestionId { get; set; }
-
-        [JsonProperty("answer")]
-        public object Answer { get; set; }
+        [JsonProperty("Answers")]
+        public List<ApplicationModel> Answers { get; set; }
     }
 }
 

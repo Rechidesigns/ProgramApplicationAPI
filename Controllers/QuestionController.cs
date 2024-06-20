@@ -41,6 +41,11 @@ namespace ProgramAplicationAPI.Controllers
         {
             try
             {
+                var questionTypeEnum = (QuestionType)Enum.Parse(typeof(QuestionType), questionDto.QuestionType);
+                if (!Enum.IsDefined(typeof(QuestionType), questionTypeEnum))
+                {
+                    return BadRequest("Enum doesn't exist");
+                }
                 var result = await _questionService.CreateQuestionAsync(questionDto);
                 return Ok(result);
             }

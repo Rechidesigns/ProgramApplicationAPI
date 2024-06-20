@@ -107,7 +107,7 @@ namespace ProgramAplicationAPI.Repository.Services
             return new QuestionDto
             {
                 QuestionText = questionModel.QuestionText,
-                QuestionType = questionModel.QuestionType,
+                QuestionType = questionModel.QuestionType.ToString(),
                 IsRequired = questionModel.IsRequired,
                 IsInternal = questionModel.IsInternal,
                 //DataType = questionModel.DataType,
@@ -121,7 +121,7 @@ namespace ProgramAplicationAPI.Repository.Services
             {
                 //id = questionDto.id,
                 QuestionText = questionDto.QuestionText,
-                QuestionType = questionDto.QuestionType,
+                QuestionType = (QuestionType)Enum.Parse(typeof(QuestionType), questionDto.QuestionType),
                 IsRequired = questionDto.IsRequired,
                 IsInternal = questionDto.IsInternal,
                // DataType = questionDto.DataType,

@@ -36,27 +36,34 @@ namespace ProgramAplicationAPI.Controllers
         //    return await _questionService.CreateQuestionsAsync(questionDtos);
         //}
 
+        //[HttpPost]
+        //public async Task<IActionResult> CreateQuestion(QuestionDto questionDto)
+        //{
+        //    try
+        //    {
+        //        var questionTypeEnum = (QuestionType)Enum.Parse(typeof(QuestionType), questionDto.QuestionType);
+        //        if (!Enum.IsDefined(typeof(QuestionType), questionTypeEnum))
+        //        {
+        //            return BadRequest("Enum doesn't exist");
+        //        }
+        //        var result = await _questionService.CreateQuestionAsync(questionDto);
+        //        return Ok(result);
+        //    }
+        //    catch (ValidationException ex)
+        //    {
+        //        return BadRequest(ex.Errors);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        //    }
+        //}
+
         [HttpPost]
-        public async Task<IActionResult> CreateQuestion(QuestionDto questionDto)
+        public async Task<IActionResult> CreateQuestions(List<QuestionDto> questions)
         {
-            try
-            {
-                var questionTypeEnum = (QuestionType)Enum.Parse(typeof(QuestionType), questionDto.QuestionType);
-                if (!Enum.IsDefined(typeof(QuestionType), questionTypeEnum))
-                {
-                    return BadRequest("Enum doesn't exist");
-                }
-                var result = await _questionService.CreateQuestionAsync(questionDto);
-                return Ok(result);
-            }
-            catch (ValidationException ex)
-            {
-                return BadRequest(ex.Errors);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            var result = await _questionService.CreateQuestionsAsync(questions);
+            return Ok(result);
         }
 
 

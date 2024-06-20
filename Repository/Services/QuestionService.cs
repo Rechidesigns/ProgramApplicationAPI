@@ -38,11 +38,34 @@ namespace ProgramAplicationAPI.Repository.Services
         //    return questionDto;
         //}
 
-        public async Task<QuestionDto> CreateQuestionAsync(QuestionDto questionDto)
-        {
-            var questionModel = MapQuestionDtoToModel(questionDto);
+        //public async Task<QuestionDto> CreateQuestionAsync(QuestionDto questionDto)
+        //{
+        //    var questionModel = MapQuestionDtoToModel(questionDto);
 
-            var validationResult = await new QuestionModelValidator().ValidateAsync(questionModel);
+        //    var validationResult = await new QuestionModelValidator().ValidateAsync(questionModel);
+
+        //    if (!validationResult.IsValid)
+        //    {
+        //        // Handle validation errors, e.g., throw an exception or return an error response
+        //        throw new ValidationException(validationResult.Errors);
+        //    }
+
+        //    await _container.CreateItemAsync(questionModel);
+        //    return questionDto;
+        //}
+
+
+        public async Task<List<QuestionDto>> CreateQuestionsAsync(List<QuestionDto> questionsDto)
+        {
+            var questionsModel = new List<QuestionModel>();
+
+            foreach (var questionDto in questionsDto)
+            {
+                var questionModel = MapQuestionDtoToModel(questionDto);
+                questionsModel.Add(questionModel);
+            }
+
+            var validationResult = await new QuestionModelValidator().ValidateAsync(questionsModel);
 
             if (!validationResult.IsValid)
             {
@@ -50,10 +73,17 @@ namespace ProgramAplicationAPI.Repository.Services
                 throw new ValidationException(validationResult.Errors);
             }
 
-            await _container.CreateItemAsync(questionModel);
-            return questionDto;
+            await CreateItemsAsync(questionsModel);
+            return questionsDto;
         }
 
+        private async Task CreateItemsAsync(List<QuestionModel> questionsModel)
+        {
+            foreach (var question in questionsModel)
+            {
+                await _container.CreateItemAsync(question);
+            }
+        }
         public async Task DeleteQuestionAsync(string id, string questionId)
         {
             await _container.DeleteItemAsync<QuestionModel>(id, new PartitionKey(questionId));

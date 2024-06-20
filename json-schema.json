@@ -1,27 +1,5 @@
-{
-  "$schema": "http://json-schema.org/draft-04/schema",
-  "title": "JSON Schema for my JSON file format",
 
-  "type": "object",
-
-  "properties": {
-    "name": {
-      "type": "string",
-      "description": "This shows up in tooltips for the 'name' property."
-    },
-    "versions": {
-      "type": "array",
-      "description": "An array of version numbers.",
-      "minItems": 1,
-      "items": {
-        "type": "number"
-      }
-    }
-  }
-}
-
-
-//payload for creating questions
+//payload for creating questions, testing and debugging
 
 {
   "questionText": "What is your best three color?",
@@ -119,15 +97,13 @@
 
 {
   "questionText": "Describe your favorite hobby",
-  "questionType": 0,
+  "questionType": Paragraph,
   "isRequired": true,
   "isInternal": true,
   "choices": []
-}
-
-{
+} {
   "questionText": "What is your favorite color?",
-  "questionType": 3,
+  "questionType": "MultipleChoice",
   "isRequired": true,
   "isInternal": true,
   "choices": [
@@ -141,4 +117,138 @@
       "choiceText": "Green"
     }
   ]
+} {
+  "questionText": "What is your favorite programming language?",
+  "questionType": "MultipleChoice",
+  "isRequired": true,
+  "isInternal": true,
+  "choices": [
+    {
+      "choiceText": "Java"
+    },
+    {
+      "choiceText": "Python"
+    },
+    {
+      "choiceText": "C#"
+    }
+  ]
 }
+
+
+//list array payload
+//list with multiple question
+
+[
+  {
+    "questionText": "What is your favorite programming language?",
+    "questionType": "MultipleChoice",
+    "isRequired": true,
+    "isInternal": false,
+    "choices": [
+      {
+        "choiceText": "Java"
+      },
+      {
+        "choiceText": "Python"
+      },
+      {
+        "choiceText": "C#"
+      }
+    ]
+  },
+  {
+    "questionText": "Describe your favorite hobby",
+    "questionType": "Paragraph",
+    "isRequired": true,
+    "isInternal": false,
+    "choices": []
+  },
+  {
+    "questionText": "What is your favorite color?",
+    "questionType": "MultipleChoice",
+    "isRequired": true,
+    "isInternal": false,
+    "choices": [
+      {
+        "choiceText": "Red"
+      },
+      {
+        "choiceText": "Blue"
+      },
+      {
+        "choiceText": "Green"
+      }
+    ]
+  },
+  {
+    "questionText": "What is your age?",
+    "questionType": "Number",
+    "isRequired": true,
+    "isInternal": false,
+    "choices": []
+  }
+]
+
+
+//new one
+//list with multiple question
+
+[
+  {
+    "questionText": "What is your first name?",
+    "questionType": "Paragraph",
+    "isRequired": true,
+    "isInternal": false,
+    "choices": []
+  },
+  {
+    "questionText": "What is your last name?",
+    "questionType": "Paragraph",
+    "isRequired": true,
+    "isInternal": false,
+    "choices": []
+  },
+  {
+    "questionText": "How many years of experience do you have?",
+    "questionType": "Number",
+    "isRequired": true,
+    "isInternal": false,
+    "choices": []
+  },
+  {
+    "questionText": "What is your current job title?",
+    "questionType": "Paragraph",
+    "isRequired": true,
+    "isInternal": false,
+    "choices": []
+  },
+  {
+    "questionText": "What industry do you currently work in?",
+    "questionType": "MultipleChoice",
+    "isRequired": true,
+    "isInternal": false,
+    "choices": [
+      {
+        "choiceText": "Technology"
+      },
+      {
+        "choiceText": "Healthcare"
+      },
+      {
+        "choiceText": "Finance"
+      }
+    ]
+  }
+]
+
+//list with just single question
+[
+  {
+    "questionText": "What is the name of your mother?",
+    "questionType": "Paragraph",
+    "isRequired": true,
+    "isInternal": false,
+    "choices": []
+  }
+]
